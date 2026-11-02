@@ -91,19 +91,6 @@ which does a few quick updates to settle the final cluster boundaries
 - K-Means starts with 3 random centroids. It repeatedly assigns each point to the closest centroid, and then recalculates the centroids as the average of the assigned points, until centroids stop moving.
 - FCM is similar to K-Means, but instead of assigning each point strictly to one cluster, points have a percentage membership in every cluster.
 
-[//]: # (### 4.3 Implementation Details)
-
-[//]: # (I implemented the algorithm cleanly in Python:)
-
-[//]: # (- `Cell.py`: Manages the flowers in a cell, calculates cell centers, and handles pollination.)
-
-[//]: # (- `Jungle.py`: Manages the 2D grid, bee flights, natural selection, and FCM integration.)
-
-[//]: # (- `Entities/`: Small classes for `Bee`, `Flower`, and `Pollen`.)
-
-[//]: # (- `main.py`: Runs data preprocessing, baseline K-Means, and the FPAB+FCM hybrid.)
-
-
 
 ## 5. Training, Results, and Discussion
 
