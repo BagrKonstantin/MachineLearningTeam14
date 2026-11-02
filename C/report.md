@@ -36,7 +36,7 @@ Because the Iris dataset has real species labels, we can also check how close ou
 We used the classic Iris dataset (150 flowers, 4 features):
 sepal length(cm), sepal width(cm), petal length(cm), petal width(cm)
 
-![Iris Features](plots/iris_features.png)  
+![Iris Features](Ex3/iris_features.png)  
 
 We chose this dataset because it is the exact benchmark used in the FPAB book chapter 8 (Kazemian et al., 2006).
 Also it has an interesting mix of easy and hard patterns: Setosa is completely separated by sepal features 
@@ -104,18 +104,18 @@ We ran all models on the scaled Iris dataset. To make sure results are fair and 
 | FPAB | 0.464 | 0.742 | 0.662 | 0.730 | 85.1% | N/A |
 | FPAB + FCM | 0.494 | 0.776 | 0.718 | 0.733 | 88.8% | 13.0 |
 
-![Metrics Comparison](plots/metrics_comparison.png)  
+![Metrics Comparison](Ex3/metrics_comparison.png)  
 
 
 
 ### 5.2 Visualizing the Clusters
 
-![Clustering Comparison](plots/clustering_comparison.png)  
+![Clustering Comparison](Ex3/clustering_comparison.png)  
 Comparison showing Ground Truth vs. K-Means, FCM, and FPAB+FCM. All three models achieve ~88.7% accuracy.
 
 And here is what the grid looks like after 50 iterations. Notice how the bees have gathered scattered flowers into a few dense "gardens"
 
-![Swarm Grid](plots/swarm_gardens_grid.png)  
+![Swarm Grid](Ex3/swarm_gardens_grid.png)  
 
 
 ### 5.3 Discussion of Findings

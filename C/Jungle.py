@@ -30,7 +30,7 @@ def cluster_accuracy(y_true, y_pred):
     return sum([w[row, col] for row, col in zip(row_ind, col_ind)]) / y_pred.size
 
 
-def plot_clusters(data, labels, cntr, filename="plots/fpab_fcm_clusters.png"):
+def plot_clusters(data, labels, cntr, filename="Ex2/fpab_fcm_clusters.png"):
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     fig, ax = plt.subplots(figsize=(7, 5))
     num_clusters = len(cntr)

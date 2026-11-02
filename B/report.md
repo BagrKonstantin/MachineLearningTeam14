@@ -12,7 +12,7 @@ Generated using `sklearn.datasets.make_blobs` with `random_state=42`. Two isotro
 - Class 1 (40 points): Centered at $(1.5, 1.5)$, standard deviation $\sigma = 1.0$.
 - Attributes: Two continuous real-valued coordinates (`Feature_1`, `Feature_2`).
 
-![Figure 1: Dataset 1 Scatter Plot (Clean Gaussian Clusters)](plots/dataset1_scatter.png)
+![Figure 1: Dataset 1 Scatter Plot (Clean Gaussian Clusters)](Ex2/dataset1_scatter.png)
 
 #### B.I.2 Dataset 2 Creation
 
@@ -21,7 +21,7 @@ We added 4 outliers per class randomly using `np.random.normal(scale=0.3)` deep 
 - Class 0 Outliers (4 points): Centered at $(3.5, 3.5)$ inside Class 1's territory.
 - Class 1 Outliers (4 points): Centered at $(-3.5, -3.5)$ inside Class 0's territory.
 
-![Figure 2: Dataset 2 Scatter Plot (With 8 Outliers in Opposing Clusters)](plots/dataset2_scatter.png)
+![Figure 2: Dataset 2 Scatter Plot (With 8 Outliers in Opposing Clusters)](Ex2/dataset2_scatter.png)
 
 #### B.I.3 Train / Test Split
 
@@ -86,11 +86,11 @@ but it cannot isolate local points as cleanly as rbf.
 
 ##### Dataset 1
 
-![Figure 3: Decision Boundaries on Dataset 1](plots/dataset1_decision_boundaries.png)
+![Figure 3: Decision Boundaries on Dataset 1](Ex2/dataset1_decision_boundaries.png)
 
 ##### Dataset 2
 
-![Figure 4: Decision Boundaries on Dataset 2](plots/dataset2_decision_boundaries.png)
+![Figure 4: Decision Boundaries on Dataset 2](Ex2/dataset2_decision_boundaries.png)
 
 ##### Visual Observations & Model Behavior
 
@@ -117,11 +117,11 @@ but it cannot isolate local points as cleanly as rbf.
 
 ##### Dataset 1
 
-![Figure 5: k-NN Decision Boundaries for Varying k on Dataset 1](plots/dataset1_knn_boundaries.png)
+![Figure 5: k-NN Decision Boundaries for Varying k on Dataset 1](Ex2/dataset1_knn_boundaries.png)
 
 ##### Dataset 2 (With Outliers)
 
-![Figure 6: k-NN Decision Boundaries for Varying k on Dataset 2](plots/dataset2_knn_boundaries.png)
+![Figure 6: k-NN Decision Boundaries for Varying k on Dataset 2](Ex2/dataset2_knn_boundaries.png)
 
 ##### Discussion of Boundary Evolution
 

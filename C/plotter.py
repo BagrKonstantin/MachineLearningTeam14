@@ -10,7 +10,7 @@ from sklearn.cluster import KMeans
 import skfuzzy as fuzz
 from multi_eval import FPABClustering, cluster_accuracy
 
-os.makedirs('plots', exist_ok=True)
+os.makedirs('Ex3', exist_ok=True)
 
 iris = datasets.load_iris()
 X = iris.data
@@ -44,9 +44,9 @@ axes[1].legend()
 axes[1].grid(True, linestyle='--', alpha=0.5)
 
 plt.tight_layout()
-plt.savefig('plots/iris_features.png', dpi=300)
+plt.savefig('Ex3/iris_features.png', dpi=300)
 plt.close()
-print("Saved plots/iris_features.png")
+print("Saved Ex2/iris_features.png")
 
 km = KMeans(n_clusters=3, random_state=42, n_init=10).fit(X_norm)
 km_labels = km.labels_
@@ -79,9 +79,9 @@ for idx, ax in enumerate(axes.flat):
     ax.grid(True, linestyle='--', alpha=0.4)
 
 plt.tight_layout()
-plt.savefig('plots/clustering_comparison.png', dpi=300)
+plt.savefig('Ex3/clustering_comparison.png', dpi=300)
 plt.close()
-print("Saved plots/clustering_comparison.png")
+print("Saved Ex2/clustering_comparison.png")
 
 grid_counts = np.zeros((fpab.m, fpab.m))
 for i in range(fpab.m):
@@ -95,9 +95,9 @@ plt.title(f"FPAB Swarm Grid ({fpab.m}x{fpab.m}) at Iteration 50\nEmergence of Cl
 plt.xlabel("Grid X")
 plt.ylabel("Grid Y")
 plt.tight_layout()
-plt.savefig('plots/swarm_gardens_grid.png', dpi=300)
+plt.savefig('Ex3/swarm_gardens_grid.png', dpi=300)
 plt.close()
-print("Saved plots/swarm_gardens_grid.png")
+print("Saved Ex2/swarm_gardens_grid.png")
 
 metrics_names = ['Silhouette\n(Cohesion/Sep)', 'Davies-Bouldin\n(Lower better)', 'ARI\n(Chance-adj)', 'NMI\n(Information)', 'Accuracy\n(Hungarian)']
 km_vals = [0.496, 0.771, 0.710, 0.731, 0.884]
@@ -120,6 +120,6 @@ plt.title('Benchmark Clustering Metrics across Models on Iris Dataset', fontsize
 plt.legend(loc='lower right')
 plt.grid(axis='y', linestyle='--', alpha=0.5)
 plt.tight_layout()
-plt.savefig('plots/metrics_comparison.png', dpi=300)
+plt.savefig('Ex3/metrics_comparison.png', dpi=300)
 plt.close()
-print("Saved plots/metrics_comparison.png")
+print("Saved Ex2/metrics_comparison.png")
