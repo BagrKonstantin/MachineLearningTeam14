@@ -1,7 +1,3 @@
-# Supervised Learning (Classification) & Bias-Variance Tradeoff Report
-
-## 2. Task Report (Solutions, Visualizations & Analysis)
-
 ### B.I. Classification Models Comparison
 
 #### B.I.1 Dataset 1 Creation
