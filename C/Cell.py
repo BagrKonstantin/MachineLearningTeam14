@@ -11,22 +11,20 @@ P_dist = 0.5
 P_pickup = 0.5
 
 
-def normalize(x):
-    norm1 = np.linalg.norm(x)
-    return x / norm1
+def normalized_euclidean_distance(x: ndarray, y: ndarray, d_max: float = 1.0) -> float:
+    if d_max <= 0:
+        d_max = 1.0
+    return float(np.linalg.norm(x - y) / d_max)
 
 
-def normalized_euclidean_distance(x: ndarray, y: ndarray) -> float:
-    return np.linalg.norm(normalize(x) - normalize(y))
-
-
-def compatibility(obj1: ndarray, obj2: ndarray) -> float:
-    return 1 - normalized_euclidean_distance(obj1, obj2)
+def compatibility(obj1: ndarray, obj2: ndarray, d_max: float = 1.0) -> float:
+    return max(0.0, 1.0 - normalized_euclidean_distance(obj1, obj2, d_max))
 
 
 class Cell:
-    def __init__(self):
+    def __init__(self, d_max: float = 1.0):
         self.objects: list[Object] = list()
+        self.d_max = d_max
 
     # utils
 
@@ -47,17 +45,33 @@ class Cell:
 
     def put_flower(self, flower: Flower):
         self.objects.append(flower)
+        self.update_all_growths()
 
     def put_pollen(self, pollen: Pollen):
-        self.objects.append(Pollen(pollen.vec, self.growth_of_pollen(pollen), pollen.n))
+        cand_growth = self.growth_of_pollen(pollen)
+        self.objects.append(Pollen(pollen.vec, cand_growth, pollen.n))
+        self.update_all_growths()
 
     # main functions
 
     def center(self) -> np.ndarray:
-        return 1 / self.size() * np.sum([i.vec for i in self.objects], axis=0)
+        if self.is_empty():
+            return np.zeros(1)
+        return np.mean([i.vec for i in self.objects], axis=0)
 
     def growth_of_pollen(self, obj: Object) -> float:
-        return compatibility(obj.vec, self.center())
+        if self.is_empty():
+            return 0.0
+        return compatibility(obj.vec, self.center(), self.d_max)
+
+    def update_all_growths(self):
+        if self.size() <= 1:
+            for obj in self.objects:
+                obj.growth = 0.0
+        else:
+            c = self.center()
+            for obj in self.objects:
+                obj.growth = compatibility(obj.vec, c, self.d_max)
 
     def flower_with_min_growth(self) -> Object:
         minimum = 1e9
@@ -70,18 +84,32 @@ class Cell:
         return self.objects[ind]
 
     def pollinate(self, bee: Bee) -> bool:
+        if self.is_empty() or not bee.has_pollen():
+            return False
+
         min_flower = self.flower_with_min_growth()
         pollen: Pollen = bee.pollen
+        cand_growth = self.growth_of_pollen(pollen)
 
-        if min_flower.growth < pollen.growth:
+        if min_flower.growth < pollen.growth and self.size() > 1:
             bee.pick_up(min_flower)
+            min_flower.vec = pollen.vec
+            min_flower.growth = cand_growth
+            min_flower.n = pollen.n
+            self.update_all_growths()
             return True
-        if self.growth_of_pollen(pollen) > pollen.growth and not self.is_pollen_present(pollen):
+
+        if cand_growth > pollen.growth and not self.is_pollen_present(pollen):
             self.put_pollen(pollen)
+            bee.clear()
+            return True
+
         return False
 
     def pick_up_pollen(self, bee: Bee) -> bool:
         size = self.size()
+        if size == 0:
+            return False
         if size == 1:
             if random() > P_pickup:
                 bee.pick_up(self.objects[0])
