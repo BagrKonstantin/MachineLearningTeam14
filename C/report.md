@@ -1,7 +1,6 @@
-# Swarm Clustering using Artificial Bees (FPAB)
-## 1. Task and Evaluation Metrics
+## C. Swarm Clustering using Artificial Bees (FPAB)
 
-### 1.1 Choice of the task and motivation
+### C.I.1 Choice of the task and motivation
 For this part, we chose clustering. 
 
 Clustering is an unsupervised learning task where we group data points together based on their similarity, 
@@ -13,7 +12,7 @@ for discovering patterns in data. Also, some standard algorithms
 can get stuck in bad solutions if their starting points are unlucky. 
 This inspired me to explore a nature-inspired swarm algorithm that uses artificial bees to find clusters.
 
-### 1.2 Evaluation Metrics
+### C.I.1.2 Evaluation Metrics
 To see how well our models group the data, we use two types of metrics:
 
 #### Internal Metrics
@@ -30,9 +29,9 @@ Because the Iris dataset has real species labels, we can also check how close ou
 
 
 
-## 2. Dataset and Preprocessing
+## C.I.2. Dataset and Preprocessing
 
-### 2.1 Choice of dataset and motivation
+### C.I.2.1 Choice of dataset and motivation
 We used the classic Iris dataset (150 flowers, 4 features):
 sepal length(cm), sepal width(cm), petal length(cm), petal width(cm)
 
@@ -44,10 +43,10 @@ from the other two, which overlap, making it a fair test for clustering algorith
 But most importantly the theme is related (artificial flowers are real flowers)
 
 
-### 2.2 Data Preprocessing
+### C.I.2.2 Data Preprocessing
 To prevent features with large numbers from dominating the distance calculations, we scaled all features between 0 and 1.
 
-## 3. Chosen Models
+## C.I.3. Chosen Models
 
 To compare different approaches, we chose two models:
 
@@ -60,9 +59,9 @@ and FCM fine-tunes the final boundaries.
 
 
 
-## 4. How the Models Work and How They Are Implemented
+## C.I.4. How the Models Work and How They Are Implemented
 
-### 4.1 How FPAB Works
+### C.I.4.1 How FPAB Works
 The algorithm imagines a jungle ecosystem:
 - A toroidal 2D grid
 - Each of the 150 Iris data points starts as a flower placed in a random empty cell
@@ -87,14 +86,14 @@ Suboptimal copies in other cells are removed.
    - We take the centers of these gardens and pass them as initial starting points to Fuzzy C-Means (FCM), 
 which does a few quick updates to settle the final cluster boundaries
 
-### 4.2 How K-Means and FCM Work
+### C.I.4.2 How K-Means and FCM Work
 - K-Means starts with 3 random centroids. It repeatedly assigns each point to the closest centroid, and then recalculates the centroids as the average of the assigned points, until centroids stop moving.
 - FCM is similar to K-Means, but instead of assigning each point strictly to one cluster, points have a percentage membership in every cluster.
 
 
-## 5. Training, Results, and Discussion
+## C.I.5. Training, Results, and Discussion
 
-### 5.1 Experimental Results
+### C.I.5.1 Experimental Results
 We ran all models on the scaled Iris dataset. To make sure results are fair and reliable, we tested across 5 different random seeds and averaged the numbers:
 
 | Model | Silhouette Score $\uparrow$ | Davies-Bouldin $\downarrow$ | ARI $\uparrow$ | NMI $\uparrow$ | Accuracy $\uparrow$ | FCM Iterations |
@@ -108,34 +107,34 @@ We ran all models on the scaled Iris dataset. To make sure results are fair and 
 
 
 
-### 5.2 Visualizing the Clusters
+### C.I.5.2 Visualizing the Clusters
 
 ![Clustering Comparison](Ex3/clustering_comparison.png)  
-Comparison showing Ground Truth vs. K-Means, FCM, and FPAB+FCM. All three models achieve ~88.7% accuracy.
+Comparison showing Ground Truth vs. K-Means, FCM, and FPAB+FCM.
 
 And here is what the grid looks like after 50 iterations. Notice how the bees have gathered scattered flowers into a few dense "gardens"
 
 ![Swarm Grid](Ex3/swarm_gardens_grid.png)  
 
 
-### 5.3 Discussion of Findings
+### C.I.5.3 Discussion of Findings
 1. All models correctly identify 100% of the Setosa flowers. The errors (around 16-17 flowers) always happen between Versicolor and Virginica because their physical dimensions naturally overlap in feature space.
 2. Even without any mathematical gradient descent, the swarm rules alone achieved 85.1% accuracy and a Davies-Bouldin index of 0.742 (which is actually better than K-Means and FCM). This shows that decentralized swarm rules can naturally group similar data together.
 3. When we use FPAB garden centers to initialize FCM, FCM converges in 13 iterations instead of 18 iterations. The swarm places the initial centers in realistic cluster regions, avoiding bad starting spots.
 
 
 
-## 6. Conclusion, Limitations, and Future Work (0.4 points)
+## C.I.6. Conclusion, Limitations, and Future Work (0.4 points)
 
-### 6.1 Conclusion
+### C.I.6.1 Conclusion
 In this exercise, we studied unsupervised clustering using the FPAB algorithm and compared it against K-Means and FCM. 
 Pure FBAB achieved 85.1% clustering accuracy while hybrid FPAB+FCM achieved 88.8% clustering accuracy.
 
-### 6.2 Limitations
+### C.I.6.2 Limitations
 1. Moving 50 bees across a 576-cell grid for 50 iterations requires more calculations than the fast matrix operations of K-Means.
 2. If the grid is too small, flowers become crowded immediately. If it is too big, bees wander around without finding flowers often enough.
 
-### 6.3 Future Improvements
+### C.I.6.3 Future Improvements
 1. We could make the bees pick up flowers easily at the start to explore, and reduce the pickup chance later so clusters settle down nicely.
 2. We can allow bees to occasionally take a long jump across the grid would help them find far-away gardens faster.
 3. The grid and bees could be implemented with NumPy/PyTorch tensors so they run in parallel on larger datasets.
